@@ -48,6 +48,20 @@ Lorem Ipsum dolor sit amet.
 
 _______________________________________________________________________________
 
+## [0.1.1] - 2021-10-27
+
+Added the TFMPlus-library for the LiDAR unit.
+
+### Added
+
+- TFMPlus header and source files
+
+### Changed
+
+- Updated the changelog
+
+_______________________________________________________________________________
+
 ## [0.1.0] - 2021-10-27
 
 Added base project based on ADC Project. Renamed all occurrences of the old name.

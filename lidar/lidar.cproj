@@ -385,6 +385,9 @@
     <Compile Include="utils\interrupt_avr8.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="utils\TFMPlus.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="utils\usart.c">
       <SubType>compile</SubType>
     </Compile>
@@ -442,6 +445,9 @@
       <SubType>compile</SubType>
     </None>
     <None Include="modules\vref\doc\vref.rst">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="utils\TFMPlus.cpp">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>
