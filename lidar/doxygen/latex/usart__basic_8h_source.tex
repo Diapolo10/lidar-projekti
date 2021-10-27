@@ -1,0 +1,47 @@
+\hypertarget{usart__basic_8h_source}{}\doxysection{usart\+\_\+basic.\+h}
+\label{usart__basic_8h_source}\index{include/usart\_basic.h@{include/usart\_basic.h}}
+\mbox{\hyperlink{usart__basic_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#ifndef USART\_BASIC\_H\_INCLUDED}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#define USART\_BASIC\_H\_INCLUDED}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <atmel\_start.h>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <stdbool.h>}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#ifdef \_\_cplusplus}}
+\DoxyCodeLine{35 \textcolor{keyword}{extern} \textcolor{stringliteral}{"{}C"{}} \{}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{comment}{/* Normal Mode, Baud register value */}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define USART3\_BAUD\_RATE(BAUD\_RATE) ((float)(16000000 * 64 / (16 * (float)BAUD\_RATE)) + 0.5)}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 int8\_t \mbox{\hyperlink{group__doc__driver__usart__basic_gad3a251bba1a79346b1c27d3301767fc4}{USART\_0\_init}}();}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__doc__driver__usart__basic_ga2e9797ff138959ac3d036b53138b7614}{USART\_0\_enable}}();}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__doc__driver__usart__basic_gaa511a2829531e83a6b8a2d9f4d92cd4d}{USART\_0\_enable\_rx}}();}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__doc__driver__usart__basic_ga79b9d691565110f7852ceeaf4e4ae935}{USART\_0\_enable\_tx}}();}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__doc__driver__usart__basic_gacb4743093fced48085f08be8475a110a}{USART\_0\_disable}}();}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 uint8\_t \mbox{\hyperlink{group__doc__driver__usart__basic_gac97a6770dcebe99ef4c8014c88d1bae2}{USART\_0\_get\_data}}();}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{keywordtype}{bool} \mbox{\hyperlink{group__doc__driver__usart__basic_gac3a937c744dab16200ee8db359f49080}{USART\_0\_is\_tx\_ready}}();}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55 \textcolor{keywordtype}{bool} \mbox{\hyperlink{group__doc__driver__usart__basic_ga8389bcb949d1ff820c139bbda0f9abf6}{USART\_0\_is\_rx\_ready}}();}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{keywordtype}{bool} \mbox{\hyperlink{group__doc__driver__usart__basic_ga97b8ccb4de88c69e8f128d05aacf3020}{USART\_0\_is\_tx\_busy}}();}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 uint8\_t \mbox{\hyperlink{group__doc__driver__usart__basic_ga52609b48c1fa65ca905d8cb91d641e13}{USART\_0\_read}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{keywordtype}{void} \mbox{\hyperlink{group__doc__driver__usart__basic_gac62803942950806dd1663834efd2448d}{USART\_0\_write}}(\textcolor{keyword}{const} uint8\_t data);}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 \textcolor{preprocessor}{\#ifdef \_\_cplusplus}}
+\DoxyCodeLine{64 \}}
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* USART\_BASIC\_H\_INCLUDED */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

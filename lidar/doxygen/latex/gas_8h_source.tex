@@ -1,0 +1,90 @@
+\hypertarget{gas_8h_source}{}\doxysection{gas.\+h}
+\label{gas_8h_source}\index{utils/assembler/gas.h@{utils/assembler/gas.h}}
+\mbox{\hyperlink{gas_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#ifndef ASSEMBLER\_GAS\_H\_INCLUDED}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#define ASSEMBLER\_GAS\_H\_INCLUDED}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#ifndef \_\_DOXYGEN\_\_}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{comment}{/* clang-\/format off */}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52         \textcolor{comment}{/* IAR doesn't accept dots in macro names */}}
+\DoxyCodeLine{53         .macro  ld\_addr, reg, sym}
+\DoxyCodeLine{54         lda.w   \(\backslash\)reg, \(\backslash\)sym}
+\DoxyCodeLine{55         .endm}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57         \textcolor{comment}{/* Define a function \(\backslash\)a name that is either globally visible or only}}
+\DoxyCodeLine{58 \textcolor{comment}{         * file-\/local.}}
+\DoxyCodeLine{59 \textcolor{comment}{         */}}
+\DoxyCodeLine{60         .macro gas\_begin\_func name, is\_public}
+\DoxyCodeLine{61                 .if \(\backslash\)is\_public}
+\DoxyCodeLine{62                 .global \(\backslash\)name}
+\DoxyCodeLine{63                 .endif}
+\DoxyCodeLine{64                 .section .text.\(\backslash\)name, \textcolor{stringliteral}{"{}ax"{}}, @progbits}
+\DoxyCodeLine{65                 .type \(\backslash\)name, @function}
+\DoxyCodeLine{66         \(\backslash\)name :}
+\DoxyCodeLine{67         .endm}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69         \textcolor{comment}{/* Define a function \(\backslash\)a name that is either globally visible or only}}
+\DoxyCodeLine{70 \textcolor{comment}{         * file-\/local in a given segment.}}
+\DoxyCodeLine{71 \textcolor{comment}{         */}}
+\DoxyCodeLine{72         .macro gas\_begin\_func\_segm name, is\_public, segment}
+\DoxyCodeLine{73                 .if \(\backslash\)is\_public}
+\DoxyCodeLine{74                 .global \(\backslash\)name}
+\DoxyCodeLine{75                 .endif}
+\DoxyCodeLine{76                 .section .\(\backslash\)segment, \textcolor{stringliteral}{"{}ax"{}}, @progbits}
+\DoxyCodeLine{77                 .type \(\backslash\)name, @function}
+\DoxyCodeLine{78         \(\backslash\)name :}
+\DoxyCodeLine{79         .endm}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81         \textcolor{comment}{/* Define \(\backslash\)a name as a weak alias for the function \(\backslash\)a strong\_name */}}
+\DoxyCodeLine{82         .macro gas\_weak\_function\_alias name, strong\_name}
+\DoxyCodeLine{83         .global \(\backslash\)name}
+\DoxyCodeLine{84         .weak   \(\backslash\)name}
+\DoxyCodeLine{85         .type   \(\backslash\)name, @\textcolor{keyword}{function}}
+\DoxyCodeLine{86         .set    \(\backslash\)name, \(\backslash\)strong\_name}
+\DoxyCodeLine{87         .endm}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89         \textcolor{comment}{/* Define a weak function called \(\backslash\)a name */}}
+\DoxyCodeLine{90         .macro gas\_weak\_function name}
+\DoxyCodeLine{91         .weak   \(\backslash\)name}
+\DoxyCodeLine{92         gas\_begin\_func \(\backslash\)name 1}
+\DoxyCodeLine{93         .endm}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#define REPEAT(count)           .rept   count}}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#define END\_REPEAT()            .endr}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#define FILL\_BYTES(count)       .fill   count}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{\#define SET\_LOC(offset)         .org    offset}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#define L(name)                 .L\#\#name}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{\#define EXTERN\_SYMBOL(name)}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#define TEXT\_SECTION(name)                              \(\backslash\)}}
+\DoxyCodeLine{103 \textcolor{preprocessor}{        .section name, "{}ax"{}}, @progbits}
+\DoxyCodeLine{104 \textcolor{preprocessor}{\#define RODATA\_SECTION(name)                            \(\backslash\)}}
+\DoxyCodeLine{105 \textcolor{preprocessor}{        .section name, "{}a"{}}, @progbits}
+\DoxyCodeLine{106 \textcolor{preprocessor}{\#define DATA\_SECTION(name)                              \(\backslash\)}}
+\DoxyCodeLine{107 \textcolor{preprocessor}{        .section name, "{}aw"{}}, @progbits}
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#define BSS\_SECTION(name)                               \(\backslash\)}}
+\DoxyCodeLine{109 \textcolor{preprocessor}{        .section name, "{}aw"{}}, @nobits}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 \textcolor{preprocessor}{\#define FUNCTION(name) gas\_begin\_func name 0}}
+\DoxyCodeLine{112 \textcolor{preprocessor}{\#define PUBLIC\_FUNCTION(name)   gas\_begin\_func name 1}}
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#define PUBLIC\_FUNCTION\_SEGMENT(name, segment)          \(\backslash\)}}
+\DoxyCodeLine{114 \textcolor{preprocessor}{        gas\_begin\_func\_segm name 1 segment}}
+\DoxyCodeLine{115 \textcolor{preprocessor}{\#define WEAK\_FUNCTION(name) gas\_weak\_function name}}
+\DoxyCodeLine{116 \textcolor{preprocessor}{\#define WEAK\_FUNCTION\_ALIAS(name, strong\_name) \(\backslash\)}}
+\DoxyCodeLine{117 \textcolor{preprocessor}{        gas\_weak\_function\_alias name strong\_name}}
+\DoxyCodeLine{118 \textcolor{preprocessor}{\#define END\_FUNC(name)                                  \(\backslash\)}}
+\DoxyCodeLine{119 \textcolor{preprocessor}{        .size   name, . -\/ name}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121 \textcolor{preprocessor}{\#define END\_FILE()}}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 \textcolor{comment}{/* clang-\/format on */}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* \_\_DOXYGEN\_\_ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127 \textcolor{preprocessor}{\#endif }\textcolor{comment}{/* ASSEMBLER\_GAS\_H\_INCLUDED */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

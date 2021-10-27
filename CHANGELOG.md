@@ -48,6 +48,22 @@ Lorem Ipsum dolor sit amet.
 
 _______________________________________________________________________________
 
+## [0.1.0] - 2021-10-27
+
+Added base project based on ADC Project. Renamed all occurrences of the old name.
+
+### Added
+
+- Base files
+- `.gitignore`
+- `.gitattributes`
+
+### Changed
+
+- Updated the changelog
+
+_______________________________________________________________________________
+
 ## [0.0.1] - 2021-10-27
 
 Initial version. Nothing has been implemented.
