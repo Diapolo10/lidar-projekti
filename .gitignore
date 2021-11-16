@@ -294,3 +294,5 @@ nbproject
 
 # Misc
 .dccache
+.pio
+.vscode
