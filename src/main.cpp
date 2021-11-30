@@ -18,15 +18,15 @@ SoftwareSerial soft_serial(LIDAR_RX, LIDAR_TX);
 TFminiPlus lidar;
 
 void setup() {
-  // Start up serial communications
+  //! Start up serial communications
   Serial.begin(LOG_SERIAL_BAUD);
   Serial.println("Started lidar test");
 
-  // Start up UART communications with the lidar
+  //! Start up UART communications with the lidar
   soft_serial.begin(LIDAR_UART_BAUDRATE);
   lidar.begin(&soft_serial);
 
-  // Set lidar options (saving is important)
+  //! Set lidar options (saving is important)
   lidar.set_framerate(TFMINI_PLUS_FRAMERATE_10HZ);
   lidar.set_output_format(TFMINI_PLUS_OUTPUT_CM);
   lidar.enable_output(true);
@@ -34,7 +34,7 @@ void setup() {
 }
 
 void loop() {
-  // Grab a reading from the lidar
+  //! Grab a reading from the lidar
   tfminiplus_data_t data;
   bool result = lidar.read_data(data, true);
 
@@ -43,7 +43,7 @@ void loop() {
   else
     Serial.println("result: false");
 
-  // Display reading
+  //! Display reading
   String output = "Distance: " + String((float)data.distance/1000.0f) + " m (" + String(data.distance) + " cm)\t";
   output += "Strength: " + String(data.strength) + "\t";
   output += "Temperature: " + String(data.temperature) + " °C";
@@ -110,6 +110,3 @@ void loop() {
   //}
   delay(600);
 }*/
-
-
-/**/
