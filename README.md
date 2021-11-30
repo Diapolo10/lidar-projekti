@@ -1,2 +1,0 @@
-# LiDAR-projekti
-
