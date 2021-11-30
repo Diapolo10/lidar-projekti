@@ -1,3 +1,5 @@
+//! This program reads data from a LiDAR sensor and outputs distances to objects.
+
 #include <Arduino.h>
 #include <TFmini_plus.h>
 #include <SoftwareSerial.h>
