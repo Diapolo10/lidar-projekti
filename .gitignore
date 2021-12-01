@@ -297,3 +297,6 @@ nbproject
 .pio
 .vscode
 .install.stamp
+
+# Docs
+/extras/docs/*/
