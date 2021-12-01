@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Builds the documentation"""
+"""Builds the files that build the documentation"""
 
 from pathlib import Path
 
@@ -14,9 +14,7 @@ DOXYFILE = DOCS_DIR / 'Doxyfile'
 REQUIREMENTS = DOCS_DIR / 'requirements.txt'
 
 conf_py = """\
-import sys
 import os
-import shlex
 import subprocess
 
 read_the_docs_build = os.environ.get('READTHEDOCS') == 'True'
@@ -41,8 +39,7 @@ pygments_style = 'sphinx'
 todo_include_todos = False
 html_static_path = ['_static']
 htmlhelp_basename = '{0}doc'
-latex_elements = {{
-}}
+latex_elements = {{}}
 latex_documents = [
   (master_doc, '{0}.tex', '{1} Documentation',
    '{1}', 'manual'),
@@ -293,22 +290,12 @@ requirements_txt = """\
 breathe
 """
 
-# if not os.path.exists('extras/docs'):
-#     os.makedirs('extras/docs')
-
 if not DOCS_DIR.exists():
    DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
 library_name = ROOT_DIR.name  # os.path.basename(os.getcwd())
 
-with open(CONFIG, 'w') as f:
-   f.write(conf_py.format(library_name, library_name.replace('_', '\_')))
-
-with open(INDEX, 'w') as f:
-   f.write(index_rst.format(library_name))
-
-with open(DOXYFILE, 'w') as f:
-   f.write(doxyfile.format(library_name))
-
-with open(REQUIREMENTS, 'w') as f:
-   f.write(requirements_txt)
+CONFIG.write_text(conf_py.format(library_name, library_name.replace('_', '\_')), encoding='utf-8')
+INDEX.write_text(index_rst.format(library_name), encoding='utf-8')
+DOXYFILE.write_text(doxyfile.format(library_name), encoding='utf-8')
+REQUIREMENTS.write_text(requirements_txt, encoding='utf-8')

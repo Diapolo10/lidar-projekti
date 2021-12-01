@@ -1,9 +1,7 @@
-import sys
 import os
-import shlex
 import subprocess
 
-read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
+read_the_docs_build = os.environ.get('READTHEDOCS') == 'True'
 
 if read_the_docs_build:
     subprocess.call('doxygen', shell=True)
@@ -14,9 +12,9 @@ breathe_default_project = "lidar-projekti"
 templates_path = ['_templates']
 source_suffix = '.rst'
 master_doc = 'index'
-project = u'lidar-projekti'
-copyright = u'2015, lidar-projekti'
-author = u'lidar-projekti'
+project = 'lidar-projekti'
+copyright = '2015, lidar-projekti'
+author = 'lidar-projekti'
 version = '1.0'
 release = '1.0'
 language = None
@@ -25,9 +23,8 @@ pygments_style = 'sphinx'
 todo_include_todos = False
 html_static_path = ['_static']
 htmlhelp_basename = 'lidar-projektidoc'
-latex_elements = {
-}
+latex_elements = {}
 latex_documents = [
-  (master_doc, 'lidar-projekti.tex', u'lidar-projekti Documentation',
-   u'lidar-projekti', 'manual'),
+  (master_doc, 'lidar-projekti.tex', 'lidar-projekti Documentation',
+   'lidar-projekti', 'manual'),
 ]
