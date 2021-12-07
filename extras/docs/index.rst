@@ -7,11 +7,22 @@
 Documentation
 =============
 
-.. doxygenfile:: ../../src/main.cpp
+.. doxygenclass:: lidar-projekti
+   :project: lidar-projekti
+   :members:
+
+.. doxygenfile:: main.cpp
    :project: lidar-projekti
    :path:
    :outline:
-   :no-link:
+
+.. doxygenfunction:: setup
+   :project: lidar-projekti
+   :outline:
+
+.. doxygenfunction:: loop
+   :project: lidar-projekti
+   :outline:
 
 ----
 

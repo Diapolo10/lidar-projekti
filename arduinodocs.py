@@ -56,11 +56,22 @@ index_rst = """\
 Documentation
 =============
 
-.. doxygenfile:: ../../src/main.cpp
+.. doxygenclass:: {0}
+   :project: {0}
+   :members:
+
+.. doxygenfile:: main.cpp
    :project: {0}
    :path:
    :outline:
-   :no-link:
+
+.. doxygenfunction:: setup
+   :project: {0}
+   :outline:
+
+.. doxygenfunction:: loop
+   :project: {0}
+   :outline:
 
 ----
 
