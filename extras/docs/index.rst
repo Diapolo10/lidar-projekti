@@ -7,13 +7,21 @@
 Documentation
 =============
 
-.. doxygenclass:: lidar-projekti
-   :project: lidar-projekti
-   :members:
-
 .. doxygenfile:: main.cpp
    :project: lidar-projekti
    :path:
+   :outline:
+
+.. doxygenfunction:: RGB_colour
+   :project: lidar-projekti
+   :outline:
+
+.. doxygenfunction:: set_LED
+   :project: lidar-projekti
+   :outline:
+
+.. doxygenfunction:: cycle_settings
+   :project: lidar-projekti
    :outline:
 
 .. doxygenfunction:: setup

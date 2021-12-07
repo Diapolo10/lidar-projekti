@@ -56,13 +56,21 @@ index_rst = """\
 Documentation
 =============
 
-.. doxygenclass:: {0}
-   :project: {0}
-   :members:
-
 .. doxygenfile:: main.cpp
    :project: {0}
    :path:
+   :outline:
+
+.. doxygenfunction:: RGB_colour
+   :project: {0}
+   :outline:
+
+.. doxygenfunction:: set_LED
+   :project: {0}
+   :outline:
+
+.. doxygenfunction:: cycle_settings
+   :project: {0}
    :outline:
 
 .. doxygenfunction:: setup
