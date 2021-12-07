@@ -56,9 +56,11 @@ index_rst = """\
 Class Documentation
 ===================
 
-.. doxygenclass:: {0}
+.. autodoxygenfile:: main.cpp
    :project: {0}
-   :members:
+   :path:
+   :outline:
+   :no-link:
 
 ----
 
@@ -116,9 +118,9 @@ INLINE_GROUPED_CLASSES = NO
 INLINE_SIMPLE_STRUCTS  = NO
 TYPEDEF_HIDES_STRUCT   = NO
 LOOKUP_CACHE_SIZE      = 0
-EXTRACT_ALL            = NO
-EXTRACT_PRIVATE        = NO
-EXTRACT_STATIC         = NO
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
 EXTRACT_LOCAL_CLASSES  = YES
 EXTRACT_LOCAL_METHODS  = NO
 EXTRACT_ANON_NSPACES   = NO
@@ -163,7 +165,12 @@ FILE_PATTERNS          = *.c \
                          *.h \
                          *.hxx \
                          *.hpp \
-                         *.h++
+                         *.h++ \
+                         *.t \
+                         *.txx \
+                         *.tpp \
+                         *.t++ \
+                         *.ino
 RECURSIVE              = YES
 EXCLUDE_SYMLINKS       = NO
 EXAMPLE_PATTERNS       = *

@@ -7,9 +7,11 @@
 Class Documentation
 ===================
 
-.. doxygenclass:: lidar-projekti
+.. autodoxygenfile:: main.cpp
    :project: lidar-projekti
-   :members:
+   :path:
+   :outline:
+   :no-link:
 
 ----
 

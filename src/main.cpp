@@ -38,10 +38,11 @@ void loop() {
   tfminiplus_data_t data;
   bool result = lidar.read_data(data, true);
 
-  if (result)
+  if (result) {
     Serial.println("result: true");
-  else
+  } else {
     Serial.println("result: false");
+  }
 
   //! Display reading
   String output = "Distance: " + String((float)data.distance/1000.0f) + " m (" + String(data.distance) + " cm)\t";
