@@ -4,10 +4,10 @@
 .. include:: ../../README.rst
    :end-before: ----
 
-Class Documentation
-===================
+Documentation
+=============
 
-.. autodoxygenfile:: main.cpp
+.. doxygenfile:: ../../src/main.cpp
    :project: lidar-projekti
    :path:
    :outline:
