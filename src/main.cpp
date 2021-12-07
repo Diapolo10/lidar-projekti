@@ -3,21 +3,107 @@
 #include <Arduino.h>
 #include <TFmini_plus.h>
 #include <SoftwareSerial.h>
+#include <EEPROM.h>
+#include <inttypes.h>
+
+#include <avr/io.h>
+
+typedef uint8_t  u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
+typedef int8_t  i8;
+typedef int16_t i16;
+typedef int32_t i32;
+typedef int64_t i64;
 
 ///////////////////////////////////////////////////////////////////////////////
 
+//TODO: Verify that the RX and TX pins are correct; https://www.arduino.cc/reference/en/language/functions/communication/serial/
 const int LIDAR_RX = 2; //D2;
 const int LIDAR_TX = 1; //D1;
+const int BUTTON_PIN = 4;
+const int LED_PIN_RED = 9; // PWM
+const int LED_PIN_GREEN = 10; // PWM
+const int LED_PIN_BLUE = 11; // PWM
+const u8 EEPROM_ADDRESS = 0;
 const long LIDAR_UART_BAUDRATE = 115200;
-
 const long LOG_SERIAL_BAUD = 115200;
+
+enum unit_mode {
+  METRIC,
+  PRECISE,
+  MURICAN
+};
+
+unit_mode config_mode;
+int button_state = 0;
+int previous_state{0};
 
 ///////////////////////////////////////////////////////////////////////////////
 
 SoftwareSerial soft_serial(LIDAR_RX, LIDAR_TX);
 TFminiPlus lidar;
 
+void RGB_colour(u8 red_light_value=0, u8 green_light_value=0, u8 blue_light_value=0)
+ {
+  analogWrite(LED_PIN_RED, red_light_value);
+  analogWrite(LED_PIN_GREEN, green_light_value);
+  analogWrite(LED_PIN_BLUE, blue_light_value);
+
+  //TODO: Figure out why OCR1A and the rest aren't defined
+  // OCR1A = static_cast<int>(red_light_value/255.0 * 360);
+  // OCR1B = static_cast<int>(green_light_value/255.0 * 360);
+  // OCR2A = static_cast<int>(blue_light_value/255.0 * 360);
+}
+
+void set_LED(unit_mode mode) {
+  switch (mode) {
+    case METRIC:
+      // set LED to green
+      RGB_colour(0, 255, 0);
+      break;
+    case PRECISE:
+      // set LED to yellow
+      RGB_colour(255, 255, 0);
+      break;
+    case MURICAN:
+      // set LED to red
+      RGB_colour(255, 0, 0);
+      break;
+    default:
+      Serial.println("Unsupported mode");
+      RGB_colour(255, 255, 255);
+  }
+}
+
+void cycle_settings() {
+  //! Update settings
+  switch (config_mode) {
+    case METRIC:
+      config_mode = PRECISE;
+      break;
+    case PRECISE:
+      config_mode = MURICAN;
+      break;
+    case MURICAN:
+      config_mode = METRIC;
+      break;
+    default:
+      Serial.println("Unsupported mode");
+  }
+  
+  EEPROM.write(EEPROM_ADDRESS, config_mode);
+  set_LED(config_mode);
+}
+
 void setup() {
+
+  //! Docs for register manipulation: https://www.arduino.cc/en/Reference/PortManipulation
+  // DDRD |= B11110000;
+  DDRB = B11000111;
+  PORTB = B00111000;
+
   //! Start up serial communications
   Serial.begin(LOG_SERIAL_BAUD);
   Serial.println("Started lidar test");
@@ -31,9 +117,29 @@ void setup() {
   lidar.set_output_format(TFMINI_PLUS_OUTPUT_CM);
   lidar.enable_output(true);
   lidar.save_settings();
+
+  //! Get config from EEPROM (if exists)
+  u8 value = EEPROM.read(EEPROM_ADDRESS);
+  if (value <= 2) {
+    //! Load config from EEPROM if exists
+    config_mode = static_cast<unit_mode>(value);
+  } else {
+    //! Initialise the EEPROM state if empty
+    config_mode = METRIC;
+    EEPROM.write(EEPROM_ADDRESS, config_mode);
+  }
+
+  set_LED(config_mode);
 }
 
 void loop() {
+  //! Check if the settings need to be updated
+  previous_state = button_state;
+  button_state = digitalRead(BUTTON_PIN);
+  if (button_state == HIGH && previous_state != button_state) {
+    cycle_settings();
+  }
+
   //! Grab a reading from the lidar
   tfminiplus_data_t data;
   bool result = lidar.read_data(data, true);
