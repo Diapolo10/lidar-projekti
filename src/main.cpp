@@ -1,4 +1,9 @@
-//! This program reads data from a LiDAR sensor and outputs distances to objects.
+/*! \file main.cpp
+ *  \brief An Arduino Every program.
+ *
+ * This program reads data from a LiDAR sensor and outputs
+ * distances to objects.
+ */
 
 #include <Arduino.h>
 #include <TFmini_plus.h>
@@ -8,35 +13,36 @@
 
 #include <avr/io.h>
 
-typedef uint8_t  u8;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
-typedef int8_t  i8;
-typedef int16_t i16;
-typedef int32_t i32;
-typedef int64_t i64;
+//! Rust-like aliases for numeric types
+typedef uint8_t  u8;  //!< Unsigned 8-bit integer
+typedef uint16_t u16; //!< Unsigned 16-bit integer
+typedef uint32_t u32; //!< Unsigned 32-bit integer
+typedef uint64_t u64; //!< Unsigned 64-bit integer
+typedef int8_t   i8;  //!< Signed 8-bit integer
+typedef int16_t  i16; //!< Signed 16-bit integer
+typedef int32_t  i32; //!< Signed 32-bit integer
+typedef int64_t  i64; //!< Signed 64-bit integer
 
 ///////////////////////////////////////////////////////////////////////////////
 
 //TODO: Verify that the RX and TX pins are correct; https://www.arduino.cc/reference/en/language/functions/communication/serial/
-const int LIDAR_RX = 2; //D2;
-const int LIDAR_TX = 3; //D3;
-const int BUTTON_PIN = 4;
-const int LED_PIN_RED = 9; // PWM
-const int LED_PIN_GREEN = 10; // PWM
-const int LED_PIN_BLUE = 11; // PWM
-const u8 EEPROM_ADDRESS = 0;
-const long LIDAR_UART_BAUDRATE = 115200;
-const long LOG_SERIAL_BAUD = 115200;
+const int LIDAR_RX = 2; //!< Lidar sensor data read pin, D2
+const int LIDAR_TX = 3; //!< Lidar sensor data write pin, D3
+const int BUTTON_PIN = 4; //!< Pin assigned for the button that controls measurement precision
+const int LED_PIN_RED = 9;    //!< PWM pin used to control the red LED
+const int LED_PIN_GREEN = 10; //!< PWM pin used to control the green LED
+const int LED_PIN_BLUE = 11;  //!< PWM pin used to control the blue LED
+const u8 EEPROM_ADDRESS = 0;  //!< EEPROM address where configuration is stored
+const long LIDAR_UART_BAUDRATE = 115200;  //!< LiDAR serial frequency
+const long LOG_SERIAL_BAUD = 115200;      //!< Serial output frequency
 
 enum unit_mode {
-  LIDAR_CM,
-  LIDAR_MM,
-  LIDAR_PIXHAWK
+  LIDAR_CM,  //!< Measurements in centimetres
+  LIDAR_MM,  //!< Measurements in millimetres
+  LIDAR_PIXHAWK  //!< Measurements in Pixhawk drone units
 };
 
-unit_mode config_mode;
+unit_mode config_mode;  //!< Stores the LiDAR precision configuration
 int button_state = 0;
 int previous_state{0};
 
@@ -103,20 +109,18 @@ void set_lidar_output_format(unit_mode mode) {
   switch (mode) {
     case LIDAR_CM:
       lidar.set_output_format(TFMINI_PLUS_OUTPUT_CM);
-      lidar.save_settings();
       break;
     case LIDAR_MM:
       lidar.set_output_format(TFMINI_PLUS_OUTPUT_MM);
-      lidar.save_settings();
       break;
     case LIDAR_PIXHAWK:
       lidar.set_output_format(TFMINI_PLUS_OUTPUT_PIXHAWK);
-      lidar.save_settings();
       break;
     default:
       Serial.println("Unsupported mode");
       return;
   }
+  lidar.save_settings();
 
   set_LED(mode);
 }
