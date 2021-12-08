@@ -14,6 +14,8 @@ DOXYFILE = DOCS_DIR / 'Doxyfile'
 REQUIREMENTS = DOCS_DIR / 'requirements.txt'
 
 conf_py = """\
+# type: ignore
+
 import os
 import subprocess
 
@@ -61,23 +63,18 @@ Documentation
 
 .. doxygenfunction:: RGB_colour
    :project: {0}
-   :outline:
 
 .. doxygenfunction:: set_LED
    :project: {0}
-   :outline:
 
 .. doxygenfunction:: cycle_settings
    :project: {0}
-   :outline:
 
 .. doxygenfunction:: setup
    :project: {0}
-   :outline:
 
 .. doxygenfunction:: loop
    :project: {0}
-   :outline:
 
 ----
 

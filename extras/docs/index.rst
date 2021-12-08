@@ -12,23 +12,18 @@ Documentation
 
 .. doxygenfunction:: RGB_colour
    :project: lidar-projekti
-   :outline:
 
 .. doxygenfunction:: set_LED
    :project: lidar-projekti
-   :outline:
 
 .. doxygenfunction:: cycle_settings
    :project: lidar-projekti
-   :outline:
 
 .. doxygenfunction:: setup
    :project: lidar-projekti
-   :outline:
 
 .. doxygenfunction:: loop
    :project: lidar-projekti
-   :outline:
 
 ----
 
