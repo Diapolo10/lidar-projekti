@@ -13,7 +13,10 @@
 
 #include <avr/io.h>
 
-//! Rust-like aliases for numeric types
+/** \name Type Aliases
+ * \brief Rust-like aliases for numeric types
+ */
+///@{
 typedef uint8_t  u8;  //!< Unsigned 8-bit integer
 typedef uint16_t u16; //!< Unsigned 16-bit integer
 typedef uint32_t u32; //!< Unsigned 32-bit integer
@@ -22,6 +25,7 @@ typedef int8_t   i8;  //!< Signed 8-bit integer
 typedef int16_t  i16; //!< Signed 16-bit integer
 typedef int32_t  i32; //!< Signed 32-bit integer
 typedef int64_t  i64; //!< Signed 64-bit integer
+///@}
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -62,6 +66,8 @@ void RGB_colour(u8 red_light_value=0, u8 green_light_value=0, u8 blue_light_valu
   // OCR1B = static_cast<int>(green_light_value/255.0 * 360);
   // OCR2A = static_cast<int>(blue_light_value/255.0 * 360);
 }
+
+
 
 void set_LED(unit_mode mode) {
   switch (mode) {
