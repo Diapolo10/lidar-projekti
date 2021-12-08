@@ -58,8 +58,6 @@ Documentation
 
 .. doxygenfile:: main.cpp
    :project: {0}
-   :path:
-   :outline:
 
 .. doxygenfunction:: RGB_colour
    :project: {0}
