@@ -31,9 +31,9 @@ const long LIDAR_UART_BAUDRATE = 115200;
 const long LOG_SERIAL_BAUD = 115200;
 
 enum unit_mode {
-  METRIC,
-  PRECISE,
-  MURICAN
+  LIDAR_CM,
+  LIDAR_MM,
+  LIDAR_PIXHAWK
 };
 
 unit_mode config_mode;
@@ -59,15 +59,15 @@ void RGB_colour(u8 red_light_value=0, u8 green_light_value=0, u8 blue_light_valu
 
 void set_LED(unit_mode mode) {
   switch (mode) {
-    case METRIC:
+    case LIDAR_CM:
       // set LED to green
       RGB_colour(0, 255, 0);
       break;
-    case PRECISE:
+    case LIDAR_MM:
       // set LED to yellow
       RGB_colour(255, 255, 0);
       break;
-    case MURICAN:
+    case LIDAR_PIXHAWK:
       // set LED to red
       RGB_colour(255, 0, 0);
       break;
@@ -80,25 +80,45 @@ void set_LED(unit_mode mode) {
 void cycle_settings() {
   //! Update settings
   switch (config_mode) {
-    case METRIC:
-      config_mode = PRECISE;
+    case LIDAR_CM:
+      config_mode = LIDAR_MM;
       break;
-    case PRECISE:
-      config_mode = MURICAN;
+    case LIDAR_MM:
+      config_mode = LIDAR_PIXHAWK;
       break;
-    case MURICAN:
-      config_mode = METRIC;
+    case LIDAR_PIXHAWK:
+      config_mode = LIDAR_CM;
       break;
     default:
       Serial.println("Unsupported mode");
+      return;
   }
-
+  
+  set_lidar_output_format(config_mode);
   EEPROM.write(EEPROM_ADDRESS, config_mode);
-  set_LED(config_mode);
 }
 
-void battery_indicator_led(int charge_percentage) {
+void set_lidar_output_format(unit_mode mode) {
+  //! Update settings
+  switch (mode) {
+    case LIDAR_CM:
+      lidar.set_output_format(TFMINI_PLUS_OUTPUT_CM);
+      lidar.save_settings();
+      break;
+    case LIDAR_MM:
+      lidar.set_output_format(TFMINI_PLUS_OUTPUT_MM);
+      lidar.save_settings();
+      break;
+    case LIDAR_PIXHAWK:
+      lidar.set_output_format(TFMINI_PLUS_OUTPUT_PIXHAWK);
+      lidar.save_settings();
+      break;
+    default:
+      Serial.println("Unsupported mode");
+      return;
+  }
 
+  set_LED(mode);
 }
 
 void setup() {
@@ -129,11 +149,11 @@ void setup() {
     config_mode = static_cast<unit_mode>(value);
   } else {
     //! Initialise the EEPROM state if empty
-    config_mode = METRIC;
+    config_mode = LIDAR_CM;
     EEPROM.write(EEPROM_ADDRESS, config_mode);
   }
 
-  set_LED(config_mode);
+  set_lidar_output_format(config_mode);
 }
 
 void loop() {
