@@ -9,8 +9,6 @@ Documentation
 
 .. doxygenfile:: main.cpp
    :project: lidar-projekti
-   :path:
-   :outline:
 
 .. doxygenfunction:: RGB_colour
    :project: lidar-projekti

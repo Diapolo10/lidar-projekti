@@ -97,6 +97,10 @@ void cycle_settings() {
   set_LED(config_mode);
 }
 
+void battery_indicator_led(int charge_percentage) {
+  
+}
+
 void setup() {
 
   //! Docs for register manipulation: https://www.arduino.cc/en/Reference/PortManipulation
