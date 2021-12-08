@@ -21,7 +21,7 @@ typedef int64_t i64;
 
 //TODO: Verify that the RX and TX pins are correct; https://www.arduino.cc/reference/en/language/functions/communication/serial/
 const int LIDAR_RX = 2; //D2;
-const int LIDAR_TX = 1; //D1;
+const int LIDAR_TX = 3; //D3;
 const int BUTTON_PIN = 4;
 const int LED_PIN_RED = 9; // PWM
 const int LED_PIN_GREEN = 10; // PWM
@@ -92,13 +92,13 @@ void cycle_settings() {
     default:
       Serial.println("Unsupported mode");
   }
-  
+
   EEPROM.write(EEPROM_ADDRESS, config_mode);
   set_LED(config_mode);
 }
 
 void battery_indicator_led(int charge_percentage) {
-  
+
 }
 
 void setup() {
