@@ -68,23 +68,24 @@ void RGB_colour(u8 red_light_value=0, u8 green_light_value=0, u8 blue_light_valu
 }
 
 
-
+//! Changes the colour of the RGB LED
 void set_LED(unit_mode mode) {
   switch (mode) {
     case LIDAR_CM:
-      // set LED to green
+      /// set LED to green
       RGB_colour(0, 255, 0);
       break;
     case LIDAR_MM:
-      // set LED to yellow
+      /// set LED to yellow
       RGB_colour(255, 255, 0);
       break;
     case LIDAR_PIXHAWK:
-      // set LED to red
+      /// set LED to red
       RGB_colour(255, 0, 0);
       break;
     default:
       Serial.println("Unsupported mode");
+      /// Set LED to white
       RGB_colour(255, 255, 255);
   }
 }

@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
-"""Builds the files that build the documentation"""
+"""
+Builds the files that build the documentation.
+
+Please edit this file instead of the generated ones.
+"""
 
 from pathlib import Path
 
@@ -59,21 +63,6 @@ Documentation
 =============
 
 .. doxygenfile:: main.cpp
-   :project: {0}
-
-.. doxygenfunction:: RGB_colour
-   :project: {0}
-
-.. doxygenfunction:: set_LED
-   :project: {0}
-
-.. doxygenfunction:: cycle_settings
-   :project: {0}
-
-.. doxygenfunction:: setup
-   :project: {0}
-
-.. doxygenfunction:: loop
    :project: {0}
 
 ----
