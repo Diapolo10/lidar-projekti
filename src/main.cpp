@@ -107,10 +107,10 @@ TFminiPlus lidar;  //!< Needed to configure the LiDAR sensor
 /**
  * @brief Sets the colour and brightness of the RGB LED based on the colour values of the parameters
  * 
- * By mixing the colours, different colours can be created.
- * Yellow = red + green
- * Purple = red + blue
- * Cyan   = green + blue
+ * By mixing the colours, different colours can be created. \n
+ * Yellow = red + green \n
+ * Purple = red + blue \n
+ * Cyan   = green + blue \n
  * White  = red + green + blue
  * 
  * Different concentrations produce different shades.
@@ -166,7 +166,7 @@ void set_LED(unit_mode mode) {
 /**
  * @brief Sets the lidar output format
  * 
- * @param mode Current LiDAR unit mode
+ * @param mode The current LiDAR unit mode
  */
 void set_lidar_output_format(unit_mode mode) {
   //! Update settings
