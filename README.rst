@@ -4,7 +4,7 @@ LiDAR-projekti
 An Arduino project that measures distances using a LiDAR sensor.
 
 Features
---------
+********
 
 - Reads LiDAR data via UART
 - Stores to and reads measurement unit configuration from EEPROM
@@ -28,7 +28,7 @@ Hardware requirements
 For the pin layout, please see the source code or documentation for the pin numbers.
 
 Installation
-------------
+************
 
 You can either run the source code via
 AVRdude yourself, or build it with PlatformIO.
@@ -38,20 +38,20 @@ within the repository itself for your convenience.
 -------------------------------------------------------------------------------
 
 Contribute
-----------
+**********
 
 - `Issue tracker`_
 - `Source Code`_
 - `Documentation`_
 
 Support
--------
+*******
 
 If you are having issues, please let us know by
 writing an issue report on GitHub.
 
 License
--------
+*******
 
 The project is licensed under the permissive `MIT License`_.
 
