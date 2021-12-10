@@ -56,7 +56,7 @@ License
 The project is licensed under the permissive `MIT License`_.
 
 .. ---------------------------------- Links -----------------------------------
-.. _`Issue Tracker`: github.com/Diapolo10/lidar-projekti/issues
-.. _`Source Code`: github.com/Diapolo10/lidar-projekti
-.. _`Documentation`: lidar-projekti.readthedocs.io/en/latest/
+.. _`Issue Tracker`: https://github.com/Diapolo10/lidar-projekti/issues
+.. _`Source Code`: https://github.com/Diapolo10/lidar-projekti
+.. _`Documentation`: https://lidar-projekti.readthedocs.io/en/latest/
 .. _`MIT License`: ./LICENSE
