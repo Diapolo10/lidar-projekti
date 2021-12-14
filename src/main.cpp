@@ -30,23 +30,24 @@ typedef int64_t  i64; //!< Signed 64-bit integer
 //TODO: Verify that the RX and TX pins are correct; https://www.arduino.cc/reference/en/language/functions/communication/serial/
 
 /** \defgroup CONSTANTS Constant values used in the LiDAR project
- * 
+ *
  * This section includes information about named constants used in the project.
  * Many of them exist to make hot-swapping pins or data rates easier,
  * though some are hard values that shouldn't be changed.
- * 
+ *
  */
 
 /** @addtogroup CONSTANTS_PINS Pins
  * \ingroup CONSTANTS
  * \brief Named hardware pin constants used in the project
  * @{ */
-const int LIDAR_RX = 2;        //!< Lidar sensor data read pin, D2
-const int LIDAR_TX = 3;        //!< Lidar sensor data write pin, D3
-const int BUTTON_PIN = 4;      //!< Pin assigned for the button that controls measurement precision
-const int LED_PIN_RED = 9;     //!< PWM pin used to control the red LED
-const int LED_PIN_GREEN = 10;  //!< PWM pin used to control the green LED
-const int LED_PIN_BLUE = 11;   //!< PWM pin used to control the blue LED
+const int LIDAR_RX = 2;             //!< Lidar sensor data read pin, D2
+const int LIDAR_TX = 3;             //!< Lidar sensor data write pin, D3
+const int BUTTON_PIN = 4;           //!< Pin assigned for the button that controls measurement precision, D4
+const int LED_PIN_RED = 9;          //!< PWM pin used to control the red LED, D9
+const int LED_PIN_GREEN = 10;       //!< PWM pin used to control the green LED, D10
+const int LED_PIN_BLUE = 11;        //!< PWM pin used to control the blue LED, D11
+const int BATTERY_VOLTAGE_PIN = 14; //!< ADC pin used to read battery voltage, A0 (D14) !!!!!CHECK PIN!!!!!
 /** @} */
 
 /** @addtogroup CONSTANTS_MEMORY Memory addresses
@@ -61,12 +62,12 @@ const u8 UNIT_MODE_CONFIG_ADDRESS = 0;  //!< EEPROM address where LiDAR unit mod
  * \brief Named serial constants used in the project
  * @{ */
 const long LIDAR_UART_BAUDRATE = 115200;  //!< LiDAR serial output frequency
-const long LOG_SERIAL_BAUDRATE = 115200;  //!< Serial logging output frequency
-/** @} */ 
+const long LOG_SERIAL_BAUDRATE = 9600;    //!< Serial logging output frequency
+/** @} */
 
 /**
  * \brief Represents the different modes for measuremement units supported by the LiDAR sensor
- * 
+ *
  * Used to store the mode in use in the device memory.
  */
 enum unit_mode {
@@ -78,11 +79,11 @@ enum unit_mode {
 ///////////////////////////////////////////////////////////////////////////////
 
 /** \defgroup GLOBAL_VARIABLES Global values used in the LiDAR project
- * 
+ *
  * This section includes information about global variables used in the project.
  * Their main purpose is keeping track of hardware events and to provide mutable state
  * for the program.
- * 
+ *
  */
 
 /** @addtogroup GLOBAL_VARIABLES_STATE State tracking
@@ -106,15 +107,15 @@ TFminiPlus lidar;  //!< Needed to configure the LiDAR sensor
 
 /**
  * @brief Sets the colour and brightness of the RGB LED based on the colour values of the parameters
- * 
+ *
  * By mixing the colours, different colours can be created. \n
  * Yellow = red + green \n
  * Purple = red + blue \n
  * Cyan   = green + blue \n
  * White  = red + green + blue
- * 
+ *
  * Different concentrations produce different shades.
- * 
+ *
  * @param red_light_value   Controls the amount of red light (0-255)
  * @param green_light_value Controls the amount of green light (0-255)
  * @param blue_light_value  Controls the amount of blue light (0-255)
@@ -134,7 +135,7 @@ void RGB_colour(u8 red_light_value=0, u8 green_light_value=0, u8 blue_light_valu
 
 /**
  * @brief Changes the colour of the RGB LED to fixed colours based on the current LiDAR unit
- * 
+ *
  * @param mode The current LiDAR unit mode
  */
 void set_LED(unit_mode mode) {
@@ -144,28 +145,28 @@ void set_LED(unit_mode mode) {
       ///< set LED to green
       RGB_colour(0, 255, 0);
       break;
-    
+
     case LIDAR_MM:
       ///< set LED to yellow
       RGB_colour(255, 255, 0);
       break;
-    
+
     case LIDAR_PIXHAWK:
       ///< set LED to red
       RGB_colour(255, 0, 0);
       break;
-    
+
     default:
       Serial.println("Unsupported mode");
       ///< Set LED to white
       RGB_colour(255, 255, 255);
-  
+
   }
 }
 
 /**
  * @brief Sets the lidar output format
- * 
+ *
  * @param mode The current LiDAR unit mode
  */
 void set_lidar_output_format(unit_mode mode) {
@@ -191,13 +192,13 @@ void set_lidar_output_format(unit_mode mode) {
 
 /**
  * @brief Changes the LiDAR unit mode
- * 
+ *
  * The function cycles over all the modes available,
  * picking the next one in the sequence,
  * then changes the config mode to that. Afterwards it
  * changes the RGB LED to show the new setting and
  * stores this setting into the EEPROM.
- * 
+ *
  */
 void cycle_settings() {
   //! Update settings
@@ -220,14 +221,38 @@ void cycle_settings() {
       return;
 
   }
-  
+
   set_lidar_output_format(config_mode);
   EEPROM.write(UNIT_MODE_CONFIG_ADDRESS, config_mode);
 }
 
 /**
+ * @brief Reads the battery level and shows it via LED
+ *
+ */
+void read_battery_level() {
+  // Read battery voltage (10 bits, so 0V is 0 and 5V is 1023)
+  int value = analogRead(BATTERY_VOLTAGE_PIN);
+  float voltage = value * (5.0 / 1023.0);
+  Serial.println("Voltage: " + String(voltage));
+
+  // Set led color
+  if (voltage > 3.7)
+    RGB_colour(0, 255, 0);
+  else if (voltage > 3.2)
+    RGB_colour(0, 255, 255);
+  else
+    RGB_colour(255, 0, 0);
+
+  // Wait 2 seconds and set the led back to show the config mode state
+  delay(2000);
+  set_LED(config_mode);
+}
+
+
+/**
  * @brief Sets up the register, serial traffic, LiDAR configuration, and EEPROM config
- * 
+ *
  */
 void setup() {
 
@@ -266,14 +291,19 @@ void setup() {
 
 /**
  * @brief The main program loop
- * 
+ *
  */
 void loop() {
   //!< Check if the settings need to be updated
   previous_state = button_state;
   button_state = digitalRead(BUTTON_PIN);
   if (button_state == HIGH && previous_state != button_state) {
-    cycle_settings();
+    // If the button is still pressed after 0.5 seconds, show the battery level and otherwise show LiDAR mode
+    delay(500);
+    if (digitalRead(BUTTON_PIN) == HIGH)
+      read_battery_level();
+    else
+      cycle_settings();
   }
 
   //!< Grab a reading from the lidar
