@@ -261,6 +261,14 @@ void setup() {
   DDRB = B11000111;
   PORTB = B00111000;
 
+  // pinMode(LIDAR_RX, INPUT);
+  // pinMode(LIDAR_TX, OUTPUT);
+  // pinMode(BUTTON_PIN, INPUT);
+  // pinMode(LED_PIN_RED, OUTPUT);
+  // pinMode(LED_PIN_GREEN, OUTPUT);
+  // pinMode(LED_PIN_BLUE, OUTPUT);
+  // pinMode(LIDAR_RX, INPUT);
+
   //!< Start up serial communications
   Serial.begin(LOG_SERIAL_BAUDRATE);
   Serial.println("Started lidar test");
