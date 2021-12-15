@@ -273,13 +273,13 @@ void setup() {
    * 
    * 0-1: Unused pins (built-in crystals) (D6-7)
    * 2:   Unused pin (D8)
-   * 4:   Red LED pin (write) (D9)
-   * 5:   Green LED pin (write) (D10)
-   * 6:   Blue LED pin (write) (D11)
-   * 7:   Unused pin (D12)
+   * 3:   Red LED pin (write) (D9)
+   * 4:   Green LED pin (write) (D10)
+   * 5:   Blue LED pin (write) (D11)
+   * 6-7: Unused pin (D12)
    */
-  DDRB |= B01110000;
-  PORTB = B01110000;
+  DDRB |= B00111000;
+  PORTB = B00111000;  //!< Lits up the LEDs
 
   /**
    * @brief Details on the set DDRC pins
@@ -287,7 +287,7 @@ void setup() {
    * 0:   Voltage measurement pin (read) (A0)
    * 1-7: Unused (A1-A7)
    */
-  DDRC |= B00000001;
+  DDRC |= B00000000;
 
   // pinMode(LIDAR_RX, INPUT);
   // pinMode(LIDAR_TX, OUTPUT);
