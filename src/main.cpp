@@ -260,14 +260,45 @@ void read_battery_level() {
 void setup() {
 
   // Docs for register manipulation: https://www.arduino.cc/en/Reference/PortManipulation
-  // DDRD |= B11110000;
-  DDRB = B00111000;
-  PORTB = B00111000;
+  // DDRX <- B76543210
 
-  DDRC = B00000000;
-  //PINC = B
+  /**
+   * @brief Details on the set DDRD pins
+   *
+   * 0-1: Unused pins (built-in serial)
+   * 2-3: LiDAR serial (read, write)
+   * 4:   Button pin (read)
+   * 5-7: Unused
+   */
+  DDRD |= B00001000;
+  /**
+   * @brief Details on the set DDRB pins
+   *
+   * 0-1: Unused pins (built-in crystals) (D6-7)
+   * 2:   Unused pin (D8)
+   * 3:   Red LED pin (write) (D9)
+   * 4:   Green LED pin (write) (D10)
+   * 5:   Blue LED pin (write) (D11)
+   * 6-7: Unused pin (D12)
+   */
+  DDRB |= B00111000;
+  PORTB = B00111000;  //!< Lits up the LEDs
 
-  DDRD = B00000000;
+  /**
+   * @brief Details on the set DDRC pins
+   *
+   * 0:   Voltage measurement pin (read) (A0)
+   * 1-7: Unused (A1-A7)
+   */
+  DDRC |= B00000000;
+
+  // pinMode(LIDAR_RX, INPUT);
+  // pinMode(LIDAR_TX, OUTPUT);
+  // pinMode(BUTTON_PIN, INPUT);
+  // pinMode(LED_PIN_RED, OUTPUT);
+  // pinMode(LED_PIN_GREEN, OUTPUT);
+  // pinMode(LED_PIN_BLUE, OUTPUT);
+  // pinMode(BATTERY_VOLTAGE_PIN, OUTPUT);
 
   //!< Start up serial communications
   Serial.begin(LOG_SERIAL_BAUDRATE);
@@ -305,12 +336,10 @@ void loop() {
   //!< Check if the settings need to be updated
   previous_state = button_state;
   button_state = digitalRead(BUTTON_PIN);
-  if (button_state == HIGH && previous_state != button_state) {
-    Serial.println("Button pressed");
+  if (button_state == LOW && previous_state != button_state) {
     // If the button is still pressed after 0.5 seconds, show the battery level and otherwise show LiDAR mode
     delay(500);
-    if (digitalRead(BUTTON_PIN) == HIGH) {
-      Serial.println("Read battery");
+    if (digitalRead(BUTTON_PIN) == LOW)
       read_battery_level();
     } else {
       cycle_settings();
