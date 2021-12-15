@@ -333,10 +333,10 @@ void loop() {
   //!< Check if the settings need to be updated
   previous_state = button_state;
   button_state = digitalRead(BUTTON_PIN);
-  if (button_state == HIGH && previous_state != button_state) {
+  if (button_state == LOW && previous_state != button_state) {
     // If the button is still pressed after 0.5 seconds, show the battery level and otherwise show LiDAR mode
     delay(500);
-    if (digitalRead(BUTTON_PIN) == HIGH)
+    if (digitalRead(BUTTON_PIN) == LOW)
       read_battery_level();
     else
       cycle_settings();
