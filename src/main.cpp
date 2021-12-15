@@ -257,9 +257,37 @@ void read_battery_level() {
 void setup() {
 
   // Docs for register manipulation: https://www.arduino.cc/en/Reference/PortManipulation
-  // DDRD |= B11110000;
-  DDRB = B11000111;
-  PORTB = B00111000;
+  // DDRX <- B76543210
+
+  /**
+   * @brief Details on the set DDRD pins
+   * 
+   * 0-1: Unused pins (built-in serial)
+   * 2-3: LiDAR serial (read, write)
+   * 4:   Button pin (read)
+   * 5-7: Unused
+   */
+  DDRD |= B00001000;
+  /**
+   * @brief Details on the set DDRB pins
+   * 
+   * 0-1: Unused pins (built-in crystals) (D6-7)
+   * 2:   Unused pin (D8)
+   * 4:   Red LED pin (write) (D9)
+   * 5:   Green LED pin (write) (D10)
+   * 6:   Blue LED pin (write) (D11)
+   * 7:   Unused pin (D12)
+   */
+  DDRB |= B01110000;
+  PORTB = B01110000;
+
+  /**
+   * @brief Details on the set DDRC pins
+   * 
+   * 0:   Voltage measurement pin (read) (A0)
+   * 1-7: Unused (A1-A7)
+   */
+  DDRC |= B00000001;
 
   // pinMode(LIDAR_RX, INPUT);
   // pinMode(LIDAR_TX, OUTPUT);
