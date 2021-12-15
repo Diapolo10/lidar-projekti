@@ -62,7 +62,7 @@ const u8 UNIT_MODE_CONFIG_ADDRESS = 0;  //!< EEPROM address where LiDAR unit mod
  * \brief Named serial constants used in the project
  * @{ */
 const long LIDAR_UART_BAUDRATE = 115200;  //!< LiDAR serial output frequency
-const long LOG_SERIAL_BAUDRATE = 9600;    //!< Serial logging output frequency
+const long LOG_SERIAL_BAUDRATE = 115200;    //!< Serial logging output frequency
 /** @} */
 
 /**
@@ -143,23 +143,26 @@ void set_LED(unit_mode mode) {
 
     case LIDAR_CM:
       ///< set LED to green
-      RGB_colour(0, 255, 0);
+      Serial.println("set LED to green");
+      RGB_colour(0, 200, 0);
       break;
 
     case LIDAR_MM:
       ///< set LED to yellow
-      RGB_colour(255, 255, 0);
+      Serial.println("set LED to yellow");
+      RGB_colour(200, 200, 0);
       break;
 
     case LIDAR_PIXHAWK:
       ///< set LED to red
-      RGB_colour(255, 0, 0);
+      Serial.println("set LED to red");
+      RGB_colour(200, 0, 0);
       break;
 
     default:
       Serial.println("Unsupported mode");
       ///< Set LED to white
-      RGB_colour(255, 255, 255);
+      RGB_colour(200, 200, 200);
 
   }
 }
@@ -238,11 +241,11 @@ void read_battery_level() {
 
   // Set led color
   if (voltage > 3.7)
-    RGB_colour(0, 255, 0);
+    RGB_colour(0, 200, 0);
   else if (voltage > 3.2)
-    RGB_colour(0, 255, 255);
+    RGB_colour(0, 200, 200);
   else
-    RGB_colour(255, 0, 0);
+    RGB_colour(200, 0, 0);
 
   // Wait 2 seconds and set the led back to show the config mode state
   delay(2000);
@@ -258,8 +261,13 @@ void setup() {
 
   // Docs for register manipulation: https://www.arduino.cc/en/Reference/PortManipulation
   // DDRD |= B11110000;
-  DDRB = B11000111;
+  DDRB = B00111000;
   PORTB = B00111000;
+
+  DDRC = B00000000;
+  //PINC = B
+
+  DDRD = B00000000;
 
   //!< Start up serial communications
   Serial.begin(LOG_SERIAL_BAUDRATE);
@@ -298,29 +306,33 @@ void loop() {
   previous_state = button_state;
   button_state = digitalRead(BUTTON_PIN);
   if (button_state == HIGH && previous_state != button_state) {
+    Serial.println("Button pressed");
     // If the button is still pressed after 0.5 seconds, show the battery level and otherwise show LiDAR mode
     delay(500);
-    if (digitalRead(BUTTON_PIN) == HIGH)
+    if (digitalRead(BUTTON_PIN) == HIGH) {
+      Serial.println("Read battery");
       read_battery_level();
-    else
+    } else {
       cycle_settings();
+      Serial.println("Change mode");
+    }
   }
 
   //!< Grab a reading from the lidar
   tfminiplus_data_t data;
   bool result = lidar.read_data(data, true);
 
-  if (result) {
+  /*if (result) {
     Serial.println("result: true");
   } else {
     Serial.println("result: false");
-  }
+  }*/
 
   //!< Display reading
-  String output = "Distance: " + String((float)data.distance/1000.0f) + " m (" + String(data.distance) + " cm)\t";
+  /*String output = "Distance: " + String((float)data.distance/1000.0f) + " m (" + String(data.distance) + " cm)\t";
   output += "Strength: " + String(data.strength) + "\t";
   output += "Temperature: " + String(data.temperature) + " °C";
-  Serial.println(output);
+  Serial.println(output);*/
 
-  delay(1000);
+  delay(200);
 }
