@@ -267,7 +267,7 @@ void setup() {
   // pinMode(LED_PIN_RED, OUTPUT);
   // pinMode(LED_PIN_GREEN, OUTPUT);
   // pinMode(LED_PIN_BLUE, OUTPUT);
-  // pinMode(LIDAR_RX, INPUT);
+  // pinMode(BATTERY_VOLTAGE_PIN, OUTPUT);
 
   //!< Start up serial communications
   Serial.begin(LOG_SERIAL_BAUDRATE);
