@@ -29,19 +29,19 @@ pytz = ">=2015.7"
 
 [[package]]
 name = "breathe"
-version = "4.34.0"
+version = "4.35.0"
 description = "Sphinx Doxygen renderer"
 category = "dev"
 optional = false
 python-versions = "*"
 files = [
-    {file = "breathe-4.34.0-py3-none-any.whl", hash = "sha256:48804dcf0e607a89fb6ad88c729ef12743a42db03ae9489be4ef8f7c4011774a"},
-    {file = "breathe-4.34.0.tar.gz", hash = "sha256:ac0768a5e84addad3e632028fe67749c567aba2b29088493b64c2c1634bcdba1"},
+    {file = "breathe-4.35.0-py3-none-any.whl", hash = "sha256:52c581f42ca4310737f9e435e3851c3d1f15446205a85fbc272f1f97ed74f5be"},
+    {file = "breathe-4.35.0.tar.gz", hash = "sha256:5165541c3c67b6c7adde8b3ecfe895c6f7844783c4076b6d8d287e4f33d62386"},
 ]
 
 [package.dependencies]
 docutils = ">=0.12"
-Sphinx = ">=4.0,<5.0.0 || >5.0.0,<6"
+Sphinx = ">=4.0,<5.0.0 || >5.0.0"
 
 [[package]]
 name = "certifi"
@@ -539,4 +539,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "23a3271a9a2e5352edb35bf2ae712f2e989065a5e7a9039dba4e5c528c1ed44e"
+content-hash = "7d393b64ba69d93bdfcead206500bb924d76401bcd19d2264b75b7e9174e3314"
