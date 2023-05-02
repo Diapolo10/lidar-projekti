@@ -9,7 +9,7 @@ license = "MIT"
 python = "^3.8.1"
 
 [tool.poetry.dev-dependencies]
-Sphinx = "^6.2.1"
+Sphinx = "^7.0.0"
 breathe = "^4.35.0"
 
 [build-system]
