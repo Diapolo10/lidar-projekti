@@ -381,14 +381,14 @@ files = [
 
 [[package]]
 name = "sphinx"
-version = "9.0.2"
+version = "9.0.4"
 description = "Python documentation generator"
 optional = false
 python-versions = ">=3.11"
 groups = ["dev"]
 files = [
-    {file = "sphinx-9.0.2-py3-none-any.whl", hash = "sha256:e6d773a16aa230f39a472c351e20abf07ee6d9d0fc0cc6552dfa67e35f5d14b0"},
-    {file = "sphinx-9.0.2.tar.gz", hash = "sha256:96fe90c40bff08f0a4a05f3a8f637ded4109f442088f896a0c7392973b1df913"},
+    {file = "sphinx-9.0.4-py3-none-any.whl", hash = "sha256:5bebc595a5e943ea248b99c13814c1c5e10b3ece718976824ffa7959ff95fffb"},
+    {file = "sphinx-9.0.4.tar.gz", hash = "sha256:594ef59d042972abbc581d8baa577404abe4e6c3b04ef61bd7fc2acbd51f3fa3"},
 ]
 
 [package.dependencies]
@@ -531,4 +531,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11.0"
-content-hash = "0f11c90ce38f37a7fc281f4d54d17bd944c17a891580f432a6ef8318ba38d8a8"
+content-hash = "26011abe4accba79eee5650394989d2f343f701d4a02ad5550f7f31ce91e153a"
